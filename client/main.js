@@ -71,7 +71,7 @@ function animate() {
   flame.visible = fire;
   if (fire) {
     // The head pivot is at the base of the neck; the muzzle moves with it.
-    head.localToWorld(mouth.set(0, 1.42, 4.24));
+    head.localToWorld(mouth.set(.4813, .7166, 4.3873));
     breathAxis.subVectors(mouth, breathEnd);
     flame.position.lerpVectors(mouth, breathEnd, .5);
     flame.scale.set(1 + .07 * Math.sin(t * 30), breathAxis.length() / 27, 1);
