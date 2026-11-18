@@ -46,24 +46,37 @@ world.add(floorMark);
 const flame = new T.Mesh(new T.ConeGeometry(2.75, 27, 8, 1, true), new T.MeshBasicMaterial({
   color: 0xff9d38, side: T.DoubleSide, transparent: true, opacity: .74, depthWrite: false,
 }));
-flame.rotation.x = -Math.PI / 2 + .25;
-flame.position.set(0, 8.15, -.5);
+const mouth = new T.Vector3();
+const breathEnd = new T.Vector3(0, 4.25, 14);
+const breathAxis = new T.Vector3();
+const up = new T.Vector3(0, 1, 0);
 world.add(flame);
 
-let dragon, head, leftWing, rightWing;
+let dragon, head, jaw, leftWing, rightWing;
 function animate() {
   requestAnimationFrame(animate);
   if (!dragon || !world.isInitialized) return;
   const t = world.time % 12;
   const warning = t >= 6 && t < 9;
   const fire = t >= 9 && t < 10.6;
-  head.rotation.x = warning ? -.09 * (t-6) : fire ? .16 : .035 * Math.sin(t*1.8);
-  leftWing.rotation.z = .07 * Math.sin(t * 2) + (warning ? .09 * (t-6) : 0);
+  const inhale = T.MathUtils.smoothstep(t, 6, 8.85) * (1 - T.MathUtils.smoothstep(t, 8.85, 9.25));
+  const exhale = T.MathUtils.smoothstep(t, 8.85, 9.2) * (1 - T.MathUtils.smoothstep(t, 10.45, 11.1));
+  head.rotation.x = .025 * Math.sin(t * 1.8) - .19 * inhale + .15 * exhale;
+  head.rotation.y = .06 * Math.sin(t * Math.PI / 6) * (1 - exhale);
+  jaw.rotation.x = .055 + .09 * inhale + .32 * exhale;
+  leftWing.rotation.z = .036 * Math.sin(t * Math.PI / 3) + .14 * inhale;
   rightWing.rotation.z = -leftWing.rotation.z;
   floorMark.visible = warning || fire;
   floorMark.material.opacity = fire ? .72 : .27 + .18 * Math.sin(t*9);
   flame.visible = fire;
-  flame.scale.x = fire ? 1 + .14 * Math.sin(t*30) : 1;
+  if (fire) {
+    // The head pivot is at the base of the neck; the muzzle moves with it.
+    head.localToWorld(mouth.set(0, 1.42, 4.24));
+    breathAxis.subVectors(mouth, breathEnd);
+    flame.position.lerpVectors(mouth, breathEnd, .5);
+    flame.scale.set(1 + .07 * Math.sin(t * 30), breathAxis.length() / 27, 1);
+    flame.quaternion.setFromUnitVectors(up, breathAxis.normalize());
+  }
   const label = !network.connected ? "连接已断开" : fire ? "吐息" : warning ? "吸气 · 避开亮带" : "待机";
   if (phase.textContent !== label) phase.textContent = label;
   camera.getWorldDirection(direction);
@@ -126,9 +139,10 @@ async function start() {
   const model = await new GLTFLoader().loadAsync("/models/cinderwing.gltf");
   dragon = model.scene;
   head = dragon.getObjectByName("Head");
+  jaw = dragon.getObjectByName("Jaw");
   leftWing = dragon.getObjectByName("LeftWing");
   rightWing = dragon.getObjectByName("RightWing");
-  dragon.position.set(0, 5, -20);
+  dragon.position.set(0, 5, -22.5);
   world.add(dragon);
   controls.setDirection(-spawn[0], 3, -33);
   enter.disabled = false;
