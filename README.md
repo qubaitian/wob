@@ -26,11 +26,16 @@ npm run dev
 | --- | --- |
 | `server/` | Rust 游戏服务。组装 Voxelize 世界，生成可行走的地面、穹顶、龙台和火柱。 |
 | `client/` | 浏览器客户端。处理输入、其他玩家的显示，以及按服务器世界时间播放的吐息演示。 |
+| [tools/generate_cinderwing.py](tools/generate_cinderwing.py) | 用 Python 生成烬翼的几何、材质、分组和站姿。 |
 | `assets/cinderwing.bbmodel` | 可在 Blockbench 中编辑的烬翼模型原稿。 |
-| `client/public/models/` | 游戏加载的 glTF 模型。更新模型时保留 Head、LeftWing、RightWing 分组，用米制比例导出并检查贴图路径。 |
+| `client/public/models/` | 游戏加载的 glTF 模型。更新模型时保留 Body、Head、Jaw、LeftWing、RightWing 分组，用米制比例导出并检查贴图路径。 |
 | `engine/voxelize/` | 官方 Voxelize v3.0.0 引擎子模块。服务端从此编译，客户端使用匹配的 npm 发行包。 |
 
 首版用于观察尺寸、绕行和多人同步。吐息采用固定的 12 秒周期，目前仅展示预警和动作。命中、生命值和胜负判定留待设计战斗时实现。
+
+## 重新生成烬翼
+
+在项目根目录运行 `python3 tools/generate_cinderwing.py`。脚本仅使用 Python 标准库，会重写 `assets/cinderwing.bbmodel` 和 `client/public/models/cinderwing.gltf`。如果在 Blockbench 里手调了模型，重新生成前请先保存改动的副本。
 
 ## 验证
 
