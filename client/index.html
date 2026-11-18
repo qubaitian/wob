@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#211c24"><title>余烬龙巢 · World of Block</title>
+  <link rel="icon" href="data:,"><link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <canvas aria-label="余烬龙巢三维场景"></canvas>
+  <header><span>WORLD OF BLOCK</span><h1>余烬龙巢</h1></header>
+  <aside id="party">连接中</aside>
+  <section aria-live="polite"><b id="boss">烬翼</b><span id="phase">正在打开巢穴…</span></section>
+  <footer><button id="enter" disabled>进入巢穴</button><span>WASD 移动　·　鼠标环视　·　空格跳跃　·　Esc 释放鼠标</span></footer>
+  <script type="module">
+    import("/main.js").catch(error => {
+      document.querySelector("#phase").textContent = error.message;
+      document.querySelector("#party").textContent = "启动失败";
+      console.error(error);
+    });
+  </script>
+</body></html>

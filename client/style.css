@@ -1,0 +1,17 @@
+:root { color-scheme: dark; font: 15px/1.5 "PingFang SC", system-ui, sans-serif; color: #fff0dc; background: #211c24 }
+* { box-sizing: border-box }
+body { margin: 0; overflow: hidden }
+canvas { display: block; width: 100vw; height: 100dvh }
+header, aside, section, footer { position: fixed; z-index: 1; text-shadow: 0 2px 6px #160b0b; pointer-events: none }
+header { top: 26px; left: 30px; border-left: 3px solid #f5a15b; padding-left: 14px }
+header span { font: bold 11px/1.5 Georgia,serif; letter-spacing: .23em; color: #f6bb85 }
+h1 { margin: 1px 0; font: 600 32px/1.3 "Songti SC",serif; letter-spacing: .08em }
+aside { right: 28px; top: 30px; color: #fff1d8 }
+section { top: 22px; left: 50%; transform: translateX(-50%); text-align: center; padding: 6px 22px; background: #1d1525cf; border-bottom: 2px solid #bb7049 }
+section b { letter-spacing: .18em; margin-right: 12px }
+footer { bottom: 26px; left: 50%; transform: translateX(-50%); text-align: center; width: min(96vw,600px); display: grid; justify-items: center; gap: 8px }
+button { pointer-events: auto; background: #f1bb83; color: #35211a; border: 1px solid #ffddac; font-weight: 650; padding: 9px 24px; cursor: pointer; border-radius: 3px }
+button:disabled { opacity: .55; cursor: wait }
+[hidden] { display: none }
+footer span { padding: 3px 10px; background: #171019a8; font-size: 12px }
+@media(max-width:650px) { header { left: 10px; top: 10px } h1 {font-size: 22px} section {top:auto; bottom:110px} aside { right:12px;top:15px } }

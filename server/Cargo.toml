@@ -1,0 +1,13 @@
+[package]
+name = "wob-server"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+actix-web = "4"
+voxelize = { path = "../engine/voxelize" }
+
+[profile.dev]
+debug = 0
+incremental = false

@@ -1,0 +1,17 @@
+{
+  "name": "world-of-block",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite client --host 127.0.0.1 --port 5180 --strictPort",
+    "server": "sh server/run.sh",
+    "build": "vite build client"
+  },
+  "dependencies": {
+    "@voxelize/core": "3.0.0",
+    "three": "~0.183.0"
+  },
+  "devDependencies": {
+    "vite": "^6.4.0"
+  }
+}
