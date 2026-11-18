@@ -19,7 +19,9 @@ resize();
 addEventListener("resize", resize);
 const network = new V.Network();
 const controls = new V.RigidControls(camera, renderer.domElement, world, { initialPosition: spawn });
-controls.connect(new V.Inputs());
+const inputs = new V.Inputs();
+inputs.setNamespace("game");
+controls.connect(inputs, "game");
 const peers = new V.Peers(controls.object);
 peers.createPeer = () => new V.Character();
 peers.onPeerUpdate = (peer, data) => {
